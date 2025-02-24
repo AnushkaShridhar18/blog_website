@@ -1,0 +1,35 @@
+{% extends './base/base.html' %}
+
+{% block content %}
+
+<h3 class="text-uppercase text-warning" style="letter-spacing: 2px;">Search Keyword - {{ keyword }}</h3>
+<main role="main" class="container p-0">
+    <div class="row">
+        <div class="col-md-8 blog-main">
+            <div class="row">
+                {% for i in blogs %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card border-0">
+                            <div class="card-body">
+                                <!-- ✅ Blog Image Display -->
+                                {% if i.blog_image %}
+                                    <a href="{% url 'blogs:blogs' i.slug %}">
+                                        <center><img src="{{ i.blog_image.url }}" alt="{{ i.title }}" class="img-fluid mb-3 rounded"></center>
+                                    </a>
+                                {% endif %}
+                                <h3><a href="{% url 'blogs:blogs' i.slug %}" class="text-dark">{{ i.title }}</a></h3>
+                                <small class="mb-1 text-muted">{{ i.created_at|date:"F d, Y" }} | {{ i.author }} | {{ i.created_at|timesince }} ago</small>
+                                <p class="card-text">{{ i.short_description | truncatewords:50 }}</p>
+                                <a href="{% url 'blogs:blogs' i.slug %}" class="text-primary">Read more...</a>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>No results found.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

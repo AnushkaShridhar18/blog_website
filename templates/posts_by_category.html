@@ -1,0 +1,52 @@
+{% extends 'base/base.html' %}
+{% block content %}
+
+<!-- Featured Post Section -->
+{% for post in featured_post %}
+    {% if forloop.first %}
+        <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark"
+             style="background-image: url('{{ post.blog_image.url }}'); background-blend-mode: overlay; background-size: cover;">
+            <div class="col-md-8 px-0">
+                <h1 class="display-4 font-italic">{{ post.title }}</h1>
+                <p class="lead my-3">{{ post.short_description }}</p>
+                <p class="lead mb-0"><a href="{% url 'blogs:blogs' post.slug %}" class="text-white font-weight-bold">Continue reading...</a></p>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
+
+<!-- Recent Articles -->
+<h3 class="text-uppercase text-warning" style="letter-spacing: 2px;">Category - {{ category }}</h3>
+<main role="main" class="container p-0">
+    <div class="row">
+        <div class="col-md-8 blog-main">
+            <div class="row">
+                {% for post in posts %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card border-0">
+                            <div class="card-body">
+                                <!-- ✅ Blog Image Display -->
+                                {% if post.blog_image %}
+                                    <a href="{% url 'blogs:blogs' post.slug %}">
+                                        <center><img src="{{ post.blog_image.url }}" alt="{{ post.title }}" class="img-fluid mb-3 rounded"></center>
+                                    </a>
+                                {% endif %}
+                                <h3><a href="{% url 'blogs:blogs' post.slug %}" class="text-dark">{{ post.title }}</a></h3>
+                                <small class="mb-1 text-muted">
+                                    {{ post.date|date:"F j, Y, g:i a" }} | {{ post.author }} | {{ post.date|timesince }} ago
+                                </small>
+                                
+                                <p class="card-text">{{ post.short_description | truncatewords:50 }}</p>
+                                <a href="{% url 'blogs:blogs' post.slug %}" class="text-primary">Read more...</a>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>No recent articles available.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

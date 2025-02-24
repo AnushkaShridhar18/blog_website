@@ -1,0 +1,42 @@
+{% extends '../base/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        
+        <!--load left sidebar-->
+
+    {% include './leftsidebar.html' %}
+
+        <!-- Right Sidebar -->
+<div class="col-md-9">
+    <div class="row">
+        <!-- All Categories -->
+        <div class="col-md-6"> 
+            <div class="card border-default mb-3">
+                <div class="card-header text-center text-uppercase font-weight-bold">
+                    <h3 class="text-dark">ALL CATEGORIES</h3>
+                </div>
+                <div class="card-body text-dark">
+                    <h5 class="card-title text-center">{{ category_count }}</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- All Posts -->
+        <div class="col-md-6"> 
+            <div class="card border-default mb-3">
+                <div class="card-header text-center text-uppercase font-weight-bold">
+                    <h3 class="text-dark">ALL POSTS</h3>
+                </div>
+                <div class="card-body text-dark">
+                    <h5 class="card-title text-center">{{ blogs_count }}</h5>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End Row -->
+</div> <!-- End Right Sidebar -->
+
+    </div> <!-- End Row -->
+</div> <!-- End Container -->
+{% endblock %}

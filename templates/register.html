@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+
+{% load crispy_forms_tags %}  <!-- Load crispy forms at the top -->
+
+{% block content %}
+<h1 class = "text-center">Register</h1>
+</hr>
+<div class="container mt-5">
+    <!--<h2>Register</h2> -->
+
+    <form method="post" action="" style = "width: 500ox; margin: auto;">  <!-- Fixed syntax issue -->
+        {% csrf_token %}
+        {{ form | crispy }}  <!-- Use crispy forms properly -->
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+</div>
+{% endblock %}
