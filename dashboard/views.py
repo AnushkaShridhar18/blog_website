@@ -1,9 +1,10 @@
-from .forms import CategoryForm
+from .forms import CategoryForm,BlogPostForm
 from django.shortcuts import get_object_or_404, render,redirect
 from blogs.models import Category,Blogs
 from django.contrib.auth.decorators import login_required
+from django.utils.text import slugify
 
-@login_required(login_url='login')
+@login_required(login_url='login') 
 def dashboard(request):
     category_count = Category.objects.all().count()
     blogs_count = Blogs.objects.all().count()
@@ -50,3 +51,35 @@ def delete_categories(request, pk):
     category = get_object_or_404(Category,pk=pk)
     category.delete()
     return redirect('categories')
+
+
+def posts(request):
+    posts = Blogs.objects.all()
+    context ={
+        'posts' : posts
+    }
+    return render(request,'dashboard/posts.html',context)
+
+def add_posts(request):
+    if request.method == "POST":
+        form = BlogPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            posts = form.save(commit=False)
+            posts.author = request.user
+            title = form.cleaned_data['title']  # ✅ Corrected
+            posts.slug = slugify(title)  # ✅ Corrected
+            posts.save()  # ✅ Corrected
+            print("Success")
+            return redirect('posts')
+        else:
+            print(form.errors)  # ✅ Debugging form errors
+
+    form = BlogPostForm()
+    context = {'form': form}
+    return render(request, 'dashboard/add_posts.html', context)
+
+
+def delete_posts(request,pk):
+    posts = get_object_or_404(Blogs,pk=pk)
+    posts.delete()
+    return redirect('posts')
