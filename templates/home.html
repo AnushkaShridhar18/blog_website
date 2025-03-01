@@ -1,4 +1,6 @@
 {% extends 'base/base.html' %}
+{% load humanize %}
+
 {% block content %}
 
 <!-- Featured Post Section -->
@@ -26,7 +28,7 @@
                 <div class="card border-0">
                     <div class="card-body"> 
                         <h3><a href="{% url 'blogs:blogs' post.slug %}">{{ post.title }}</a></h3>
-                        <small class="mb-1 text-muted">{{ post.date }} | {{ post.author }} | {{ post.date|timesince }} ago</small>
+                        <small class="mb-1 text-muted">{{ post.date }} | {{ post.author }} | {{ post.created_at|timesince }} ago</small>
                         <p class="card-text">{{ post.short_description | truncatewords:50 }}</p>
                         <a href="{% url 'blogs:blogs' post.slug %}" class="text-primary">Read more...</a>
                     </div>
@@ -47,7 +49,7 @@
                         <div class="card border-0">
                             <div class="card-body"> 
                                 <h3><a href="{% url 'blogs:blogs' post.slug %}">{{ post.title }}</a></h3>
-                                <small class="mb-1 text-muted">{{ post.date }} | {{ post.author }} | {{ post.date|timesince }} ago</small>
+                                <small class="mb-1 text-muted">{{ post.date }} | {{ post.author }} | {{ post.created_at|timesince }} ago</small>
                                 <p class="card-text">{{ post.short_description | truncatewords:50 }}</p>
                                 <a href="{% url 'blogs:blogs' post.slug %}" class="text-primary">Read more...</a>
                             </div>

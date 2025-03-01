@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
-from .models import Blogs, Category
+from .models import Blogs, Category,Comment
 from blog_main.forms import RegistrationForm  # ✅ Import from blog_main
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import auth
-
+from django.http import HttpResponseRedirect
 
 def home(request):
     categories = Category.objects.all()
@@ -30,9 +30,28 @@ def posts_by_category(request, category_id):
     }
     return render(request, 'posts_by_category.html', context)
 
+#blogs
 def blogs(request, slug):
     blog = get_object_or_404(Blogs, slug=slug, status=1)
-    return render(request, 'blogs.html', {'blog': blog})
+    #comment
+    comment = Comment()
+    if request.method == "POST":
+        comment.user = request.user
+        comment.blog = blog
+        comment.comment = request.POST['comment']
+        comment.save()
+        return HttpResponseRedirect(request.path_info)
+    comments = Comment.objects.filter(blog = blog)
+    comment_count = comments.count()
+    context = {
+        'blog' :  blog,
+        'comments' : comments,
+        'comments_count':comment_count
+
+    }
+    return render(request,'blogs.html',context)
+    
+   
 
 def search(request):
     keyword = request.GET.get('keyword')

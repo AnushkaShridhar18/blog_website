@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Blogs, Category
+from .models import Blogs, Category,Comment
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'category_name', 'created_at', 'updated_at')
@@ -23,3 +23,4 @@ class BlogAdmin(admin.ModelAdmin):
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Blogs, BlogAdmin)
+admin.site.register(Comment)

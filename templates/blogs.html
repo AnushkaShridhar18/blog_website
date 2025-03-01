@@ -28,6 +28,40 @@
                     <section class="mb-5">
                         <p class="fs-5 mb-4">{{ blog.short_description }}</p>
                         <p class="fs-5 mb-4">{{ blog.blog_body }}</p>
+
+                    <!--Comments-->
+                    <h4>Comments {{comments_count}}</h4>
+                    {% if comments %}
+                    {% for comment in comments %}
+                    <div class="card">
+                        <div class="card-body">
+                            <p class = "card-text">{{ comment }}</p> 
+                            <span>
+                                <small>{{comment.user}}</small>
+                                <small>{{comment.created_at|timesince}} ago</small>
+                                
+                            </span>
+                                   
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    no comments yet
+
+                    {% endif %}
+                    <div class="form-group">
+                        {% if user.is_authenticated %}
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <textarea name="comment" class="form-control" placeholder="Write your comment"></textarea>
+                                <input type="Submit" class="btn btn-primary mt-2" >
+                            </div>
+                        </form>
+                        {% else %}
+                        <p>Please <span><a href="{% url 'login'%}">Login</a></span> to comment on blogs</p>
+                        {%endif%}
+                    </div>
                     </section>
                 </article>
             </div>
