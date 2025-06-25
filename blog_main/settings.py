@@ -15,17 +15,19 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Added for production (Render)
 
 # Media files settings (to display uploaded images)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Quick-start development settings - unsuitable for production
+# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-#w9tww8p2-(9ney9m1sq_-)%b#k8ppj@lv3@7ls&#1%jiml**'
 
-DEBUG = True
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
 
-ALLOWED_HOSTS = []  # Add allowed domains if needed
+ALLOWED_HOSTS = ['the-thought-hub.onrender.com']  # Replace with your actual Render URL
 
 # Application definition
 INSTALLED_APPS = [
@@ -57,7 +59,7 @@ ROOT_URLCONF = 'blog_main.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # Explicitly set the template directory
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -65,7 +67,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'blogs.context_processors.get_categories',  # Ensure this is correct
+                'blogs.context_processors.get_categories',
             ],
         },
     },
@@ -99,14 +101,12 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Crispy Forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
